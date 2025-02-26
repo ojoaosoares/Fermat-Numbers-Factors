@@ -24,10 +24,10 @@ int main(int argc, char *argv[])
 
     unsigned long long n = 0, k = 0, l = 0; // Inicializa o índice
     bool show = false;
-    std::string method = "LL"; // Método padrão
+    std::string method = "e"; // Método padrão
     int opt;
 
-    while ((opt = getopt(argc, argv, "i:m:n:k:l")) != -1) {
+    while ((opt = getopt(argc, argv, "i:m:k:l:n")) != -1) {
         switch (opt) {
             case 'i':
                 n = atoll(optarg); // Armazena o índice do número de Mersenne
@@ -41,23 +41,27 @@ int main(int argc, char *argv[])
             case 'k':
                 k = atoll(optarg);
                 break;
-           case 'l':
+            case 'l':
                 l = atoll(optarg);
                 break;
             default:
                 usage();
                 return 1;
         }
+
+        
     }
 
-    if (method == "e" && n == 0 || method == "f" && l == 0 && k == 0) {
+    mpz_class F;
+
+    if (method == "e" && n == 0 || method == "f" && (l == 0 || k == 0)) {
         usage();
         return 1;
     }
 
     else if (method == "e")
     {
-        mpz_class F = n_fermat_number(n);
+        F = n_fermat_number(n);
 
         cout << "2^(2^" << n << ") + 1 ";
 
@@ -68,12 +72,46 @@ int main(int argc, char *argv[])
 
         else
             cout << "is not a prime number\nThe smallest factor is " << factor << '\n';
+
+        if (show)
+        {
+            F = n_fermat_number(n);    
+            cout << "2^(2^" << n << ") + 1 = " <<  F << '\n';
+        }
     }
 
-    // else if (method == "f")
-    // {
+    else if (method == "f")
+    {
+        cout << k << "*2^" << l << " + 1 ";
 
-    // }
+        if (show)
+        {
+            mpz_class q ;
+            mpz_set_ui(q.get_mpz_t(), k);
+            q = (q << l) + 1;
+
+            cout << "= " << q << ' ';
+        }
+            
+
+        vector<unsigned long long> fnumbers = find_fermat_number(k, l);
+
+        if (fnumbers.empty())
+            cout << "is not a factor of a Fermat number\n";
+
+        else
+            for (unsigned long long f : fnumbers)
+            {
+                cout << "is a factor of 2^(2^" << f << ") + 1\n";
+
+    
+                if (show)
+                {
+                    F = n_fermat_number(f);    
+                    cout << "2^(2^" << f << ") + 1 = " <<  F << '\n';
+                }
+            }
+    }
 
     return 0;
 }
