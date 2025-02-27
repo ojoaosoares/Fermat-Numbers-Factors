@@ -12,7 +12,7 @@ SRC_FOLDER = ./src/
 
 # all sources, objs, and header files
 MAIN = Main
-TARGET = a.out
+TARGET =fermat_pf_test
 SRC = $(wildcard $(SRC_FOLDER)*.cpp)
 OBJ = $(patsubst $(SRC_FOLDER)%.cpp, $(OBJ_FOLDER)%.o, $(SRC))
 
