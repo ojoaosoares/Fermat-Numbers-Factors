@@ -8,7 +8,7 @@ using namespace std;
 
 void usage() {
     std::cout << "Usage: ./mersenne_primality_test -i [N] [-m METHOD] [-n]\n"
-            << "  -m Mode - Mode e for euler factorization of the Fermat Number e or mode f for looking for a Fermat number that has a prime factor k*2^l + 1\n"
+            << "  -m Mode - Mode (p) for a primality test or mode (f) for looking for a Fermat number that has a prime factor k*2^l + 1\n"
             << "  -i index - Index of the Mersenne number to be tested (e.g., 5 for M_5 = 2^5 - 1)\n"
             << "  -k the k part of the prime factor k*2^l + 1\n"
             << "  -l the l part of the prime factor k*2^l + 1\n"
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
     unsigned long long n = 0, k = 0, l = 0; // Inicializa o índice
     bool show = false;
-    std::string method = "e"; // Método padrão
+    std::string method = "p"; // Método padrão
     int opt;
 
     while ((opt = getopt(argc, argv, "i:m:k:l:n")) != -1) {
@@ -54,12 +54,12 @@ int main(int argc, char *argv[])
 
     mpz_class F;
 
-    if (method == "e" && n == 0 || method == "f" && (l == 0 || k == 0)) {
+    if (method == "p" && n == 0 || method == "f" && (l == 0 || k == 0)) {
         usage();
         return 1;
     }
 
-    else if (method == "e")
+    else if (method == "p")
     {
         F = n_fermat_number(n);
 
