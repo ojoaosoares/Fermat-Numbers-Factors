@@ -18,7 +18,7 @@ $$
 
 - **Euler Method**: Efficiently finds the smallest prime factor of Fermat numbers. This method is used in the primality test.
 - **Finding Fermat Numbers**: Since <em>k · 2<sup>l</sup> + 1</em> can be a divisor of any Fermat number <em>F<sub>n</sub></em> with n < l, we search for all Fermat numbers that could potentially be divisible by it.
-- **Optional Output**: Supports a flag to print the corresponding Fermat number and \( k \cdot 2^l + 1 \).
+- **Optional Output**: Supports a flag to print the corresponding Fermat number and Fermat factor.
 
 ## Prerequisites
 
